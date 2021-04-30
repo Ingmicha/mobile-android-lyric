@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/lyricListFragment">
+
+    <fragment
+        android:id="@+id/lyricFragment"
+        android:name="com.mura.android.lyrics.ui.LyricFragment"
+        android:label="LyricFragment"
+        tools:layout="@layout/fragment_lyric" />
+    <fragment
+        android:id="@+id/lyricListFragment"
+        android:name="com.mura.android.lyrics.ui.LyricListFragment"
+        android:label="LyricListFragment"
+        tools:layout="@layout/fragment_lyric_list">
+        <action
+            android:id="@+id/action_lyricListFragment_to_lyricFragment"
+            app:destination="@id/lyricFragment" />
+        <action
+            android:id="@+id/action_lyricListFragment_to_lyricFindFragment"
+            app:destination="@id/lyricFindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lyricFindFragment"
+        android:name="com.mura.android.lyrics.ui.LyricFindFragment"
+        android:label="LyricFindFragment"
+        tools:layout="@layout/fragment_lyric_save">
+        <argument
+            android:name="artist"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="lyric"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
