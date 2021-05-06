@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.mura.android.lyrics.R
 import com.mura.android.lyrics.data.model.Lyric
 import com.mura.android.lyrics.databinding.ItemLyricBinding
-import com.mura.android.lyrics.ui.LyricListFragment
-import com.mura.android.lyrics.ui.LyricListFragmentDirections
+import com.mura.android.lyrics.ui.fragments.LyricListFragment
+import com.mura.android.lyrics.ui.fragments.LyricListFragmentDirections
 
 
 class LyricAdapter(private val lyricListFragment: LyricListFragment) :
@@ -40,8 +39,8 @@ class LyricAdapter(private val lyricListFragment: LyricListFragment) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemViewHolder = holder as ItemViewHolder
-        itemViewHolder.viewBinding.artistTextView.text = lyrics[position].artist
-        itemViewHolder.viewBinding.titleTextView.text = lyrics[position].title
+        itemViewHolder.viewBinding.item = lyrics[position]
+        itemViewHolder.viewBinding.executePendingBindings()
         itemViewHolder.viewBinding.itemCardView.setOnClickListener {
 
             val action = LyricListFragmentDirections.actionLyricListFragmentToLyricFindFragment(

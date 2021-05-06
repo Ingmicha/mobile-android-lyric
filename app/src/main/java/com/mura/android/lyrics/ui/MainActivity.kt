@@ -3,13 +3,10 @@ package com.mura.android.lyrics.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.databinding.DataBindingUtil
 import com.mura.android.lyrics.R
-import com.mura.android.lyrics.data.viewModel.MainViewModel
 import com.mura.android.lyrics.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -19,9 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setContentView(binding.root)
     }
 
     fun showLinearProgressBar(show: Boolean) {

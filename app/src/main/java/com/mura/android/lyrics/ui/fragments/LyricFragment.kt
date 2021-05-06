@@ -1,23 +1,17 @@
-package com.mura.android.lyrics.ui
+package com.mura.android.lyrics.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.mura.android.lyrics.R
-import com.mura.android.lyrics.data.viewModel.MainViewModel
 import com.mura.android.lyrics.databinding.FragmentLyricBinding
-import com.mura.android.lyrics.databinding.FragmentLyricListBinding
+import com.mura.android.lyrics.ui.MainActivity
 import com.mura.android.lyrics.ui.base.BaseFragment
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 
@@ -30,12 +24,12 @@ class LyricFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lyric, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_lyric, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentLyricBinding.bind(view)
 
         setOnClickListeners()
 

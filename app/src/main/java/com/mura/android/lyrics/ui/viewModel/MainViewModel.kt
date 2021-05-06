@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.data.viewModel
+package com.mura.android.lyrics.ui.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
