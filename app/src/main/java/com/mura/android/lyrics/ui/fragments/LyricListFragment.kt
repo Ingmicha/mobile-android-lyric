@@ -11,9 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mura.android.lyrics.R
 import com.mura.android.lyrics.databinding.FragmentLyricListBinding
-import com.mura.android.lyrics.ui.MainActivity
 import com.mura.android.lyrics.ui.adapter.LyricAdapter
 import com.mura.android.lyrics.ui.base.BaseFragment
+import com.mura.android.lyrics.utils.Resource
 import kotlinx.coroutines.launch
 
 class LyricListFragment : BaseFragment() {
@@ -27,7 +27,8 @@ class LyricListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_lyric_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lyric_list, container, false)
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -46,11 +47,6 @@ class LyricListFragment : BaseFragment() {
         //**Set Listeners
         setListeners()
 
-        //** Set Data
-        (activity as MainActivity).showLinearProgressBar(true) //  View.GONE
-        lifecycleScope.launch {
-            mainViewModel.onGetHistorySearch()
-        }
     }
 
     private fun setAdapter() {
@@ -76,15 +72,16 @@ class LyricListFragment : BaseFragment() {
 
     private fun setObservers() {
 
-        mainViewModel.list.observe(viewLifecycleOwner, Observer {
-            (activity as MainActivity).showLinearProgressBar(false) //  View.GONE
-            if (it.isNotEmpty()) {
-                adapter.updateData(it)
-                binding.recyclerViewLyricList.visibility = View.VISIBLE
-            } else {
-                binding.emptyListTextView.visibility = View.VISIBLE
-                binding.emptyImageView.visibility = View.VISIBLE
-            }
+        mainViewModel.responseDatabase.observe(viewLifecycleOwner, Observer {
+            //(activity as MainActivity).showLinearProgressBar(false) //  View.GONE
+            if (it.status == Resource.Status.SUCCESS)
+                if ((it.data as List<*>).isNotEmpty()) {
+                    adapter.updateData(it.data)
+                    binding.recyclerViewLyricList.visibility = View.VISIBLE
+                } else {
+                    binding.emptyListTextView.visibility = View.VISIBLE
+                    binding.emptyImageView.visibility = View.VISIBLE
+                }
         })
     }
 }

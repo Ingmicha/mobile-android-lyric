@@ -3,4 +3,5 @@
     <string name="search">Buscar</string>
     <string name="history">Historial</string>
     <string name="text_empty_list">Sin Historial\nRrealiza una busqueda</string>
+    <string name="text_no_result">Sin resultados.</string>
 </resources>

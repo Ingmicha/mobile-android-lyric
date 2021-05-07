@@ -13,9 +13,9 @@ import com.mura.android.lyrics.ui.fragments.LyricListFragmentDirections
 class LyricAdapter(private val lyricListFragment: LyricListFragment) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var lyrics: List<Lyric>
+    lateinit var lyrics: List<*>
 
-    fun updateData(lyrics: List<Lyric>) {
+    fun updateData(lyrics: List<*>) {
         this.lyrics = lyrics
         this.notifyDataSetChanged()
     }
@@ -39,14 +39,14 @@ class LyricAdapter(private val lyricListFragment: LyricListFragment) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemViewHolder = holder as ItemViewHolder
-        itemViewHolder.viewBinding.item = lyrics[position]
+        itemViewHolder.viewBinding.item = lyrics[position] as Lyric
         itemViewHolder.viewBinding.executePendingBindings()
         itemViewHolder.viewBinding.itemCardView.setOnClickListener {
 
             val action = LyricListFragmentDirections.actionLyricListFragmentToLyricFindFragment(
-                lyrics[position].artist,
-                lyrics[position].title,
-                lyrics[position].lyric
+                (lyrics[position] as Lyric).artist,
+                (lyrics[position] as Lyric).title,
+                (lyrics[position] as Lyric).lyric
             )
 
             lyricListFragment.findNavController()

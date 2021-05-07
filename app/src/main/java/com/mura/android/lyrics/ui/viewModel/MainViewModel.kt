@@ -2,6 +2,7 @@ package com.mura.android.lyrics.ui.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.mura.android.lyrics.data.model.Lyric
@@ -10,6 +11,7 @@ import com.mura.android.lyrics.data.repository.LyricRepository
 import com.mura.android.lyrics.utils.NetworkHelper
 import com.mura.android.lyrics.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,21 +25,16 @@ class MainViewModel @Inject constructor(
 
     var response = MutableLiveData<Resource<Any>>()
 
-    var list = MutableLiveData<List<Lyric>>()
-
-    var lyric = MutableLiveData<String>()
-
     var error = MutableLiveData<Resource<Any>>()
 
-    suspend fun onGetHistorySearch() {
-        viewModelScope.launch {
-            list.postValue(dataBaseRepository.getAllLyrics())
-        }
+    val responseDatabase = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        emit(Resource.success(dataBaseRepository.getAllLyrics()))
     }
 
     suspend fun onSearchByArtistAndTitle(artist: String, title: String) {
 
-        response.postValue(Resource.loading(null))
+        response.value = Resource.loading(null)
 
         if (networkHelper.isNetworkConnected()) {
 
@@ -65,24 +62,22 @@ class MainViewModel @Inject constructor(
                             )
                         )
 
-                        lyric.postValue(lyricResponse)
-
                     } else {
-                        error.postValue(
+                        error.value =
                             Resource.error(
                                 data = null,
                                 message = "No se encontro algun resultado"
                             )
-                        )
+
                     }
 
                 } catch (e: Exception) {
-                    error.postValue(
+                    error.value =
                         Resource.error(
                             data = null,
                             message = e.message ?: otherErr
                         )
-                    )
+
                 }
             }
 

@@ -25,6 +25,8 @@ class LyricFragment : BaseFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_lyric, container, false)
+        binding.lifecycleOwner = this
+        binding.lyricViewModel = mainViewModel
         return binding.root
     }
 
@@ -32,8 +34,6 @@ class LyricFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setOnClickListeners()
-
-        setObservers()
 
     }
 
@@ -43,7 +43,6 @@ class LyricFragment : BaseFragment() {
             val title = binding.tittleEditText.text.toString()
 
             if (artist.trim().isNotEmpty() && title.trim().isNotEmpty()) {
-                (activity as MainActivity).showLinearProgressBar(true) //  View.GONE
                 lifecycleScope.launch {
                     mainViewModel.onSearchByArtistAndTitle(artist, title)
                 }
@@ -55,20 +54,4 @@ class LyricFragment : BaseFragment() {
 
         }
     }
-
-    private fun setObservers() {
-
-        mainViewModel.lyric.observe(viewLifecycleOwner, Observer {
-            (activity as MainActivity).showLinearProgressBar(false) //  View.GONE
-            binding.resultTextView.text = it
-        })
-
-        mainViewModel.error.observe(viewLifecycleOwner, Observer {
-            (activity as MainActivity).showLinearProgressBar(false) //  View.GONE
-
-            Snackbar.make(requireView(), it.message!!, Snackbar.LENGTH_SHORT)
-                .show()
-        })
-    }
-
 }

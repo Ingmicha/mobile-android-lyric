@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="lyricViewModel"
+            type="com.mura.android.lyrics.ui.viewModel.MainViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -84,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
-                android:text="Sin Resultados`" />
+                android:text="@{lyricViewModel.response.data!= null? String.valueOf(lyricViewModel.response.data) : @string/text_no_result}" />
         </ScrollView>
 
 
