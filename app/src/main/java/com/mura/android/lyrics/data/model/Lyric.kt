@@ -28,8 +28,4 @@ data class Lyric(
     @ColumnInfo(name = "lyrics")
     @SerializedName("lyrics")
     val lyric: String
-) {
-    public fun lyric(artist: String, title: String, lyric: String): Lyric {
-        return Lyric(artist = artist, title = title, lyric = lyric)
-    }
-}
+)

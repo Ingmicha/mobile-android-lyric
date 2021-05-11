@@ -10,6 +10,7 @@ import com.mura.android.lyrics.data.repository.DataBaseRepository
 import com.mura.android.lyrics.data.repository.LyricRepository
 import com.mura.android.lyrics.utils.NetworkHelper
 import com.mura.android.lyrics.utils.Resource
+import com.mura.android.lyrics.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,18 +28,20 @@ class MainViewModel @Inject constructor(
 
     var error = MutableLiveData<Resource<Any>>()
 
-    val responseDatabase = liveData(Dispatchers.IO){
+    val eventMsg = SingleLiveEvent<String>()
+
+    val responseDatabase =
+        liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         emit(Resource.success(dataBaseRepository.getAllLyrics()))
     }
 
-    suspend fun onSearchByArtistAndTitle(artist: String, title: String) {
+    suspend fun onSearchByArtistAndTitle(artist: String, title: String) =
 
-        response.value = Resource.loading(null)
+        viewModelScope.launch {
+            response.value = Resource.loading(null)
 
-        if (networkHelper.isNetworkConnected()) {
-
-            viewModelScope.launch {
+            if (networkHelper.isNetworkConnected()) {
                 try {
                     response.value = Resource.success(
                         lyricRepository.findLyricByArtistAndTitle(
@@ -79,20 +82,10 @@ class MainViewModel @Inject constructor(
                         )
 
                 }
+            } else {
+                eventMsg.value = internetErr
             }
-
-        } else {
-
-            error.postValue(
-                Resource.error(
-                    data = null,
-                    message = internetErr
-                )
-            )
-
         }
-
-    }
 
     companion object {
         private val TAG = this::class.java.canonicalName!!
