@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.ui.adapter
+package com.mura.android.lyrics.ui.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

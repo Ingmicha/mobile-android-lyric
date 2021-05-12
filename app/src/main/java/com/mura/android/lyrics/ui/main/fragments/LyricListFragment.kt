@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.ui.fragments
+package com.mura.android.lyrics.ui.main.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mura.android.lyrics.R
 import com.mura.android.lyrics.databinding.FragmentLyricListBinding
-import com.mura.android.lyrics.ui.adapter.LyricAdapter
+import com.mura.android.lyrics.ui.main.adapter.LyricAdapter
 import com.mura.android.lyrics.ui.base.BaseFragment
 import com.mura.android.lyrics.utils.Resource
-import kotlinx.coroutines.launch
 
 class LyricListFragment : BaseFragment() {
 

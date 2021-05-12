@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/lyricFragment"
-        android:name="com.mura.android.lyrics.ui.fragments.LyricFragment"
+        android:name="com.mura.android.lyrics.ui.main.fragments.LyricFragment"
         android:label="LyricFragment"
         tools:layout="@layout/fragment_lyric" />
     <fragment
         android:id="@+id/lyricListFragment"
-        android:name="com.mura.android.lyrics.ui.fragments.LyricListFragment"
+        android:name="com.mura.android.lyrics.ui.main.fragments.LyricListFragment"
         android:label="LyricListFragment"
         tools:layout="@layout/fragment_lyric_list">
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/lyricFindFragment"
-        android:name="com.mura.android.lyrics.ui.fragments.LyricFindFragment"
+        android:name="com.mura.android.lyrics.ui.main.fragments.LyricFindFragment"
         android:label="LyricFindFragment"
         tools:layout="@layout/fragment_lyric_save">
         <argument

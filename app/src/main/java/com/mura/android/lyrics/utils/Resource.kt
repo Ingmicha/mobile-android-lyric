@@ -1,40 +1,16 @@
 package com.mura.android.lyrics.utils
 
-import com.mura.android.lyrics.data.model.Lyric
-import retrofit2.Response
-
-data class Resource<out T>(val status: Status, val code: Int?, val data: T?, val message: String?) {
-
-    enum class Status {
-        SUCCESS,
-        ERROR,
-        LOADING
-    }
+data class Resource<out T>(
+    val status: Status,
+    val data: T? = null,
+    val error: Throwable? = null
+) {
+    enum class Status { LOADING, SUCCESS, ERROR }
 
     companion object {
-        fun <T> success(data: T): Resource<Any> {
-
-            return when (data) {
-                is Response<*> -> {
-                    val response = data as Response<*>
-                    Resource(Status.SUCCESS, response.code(), response.body(), null)
-                }
-
-                is List<*> -> {
-                    Resource(Status.SUCCESS, 0, data, null)
-                }
-                else -> {
-                    Resource(Status.SUCCESS, 0, data, null)
-                }
-            }
-        }
-
-        fun <T> error(message: String, data: T? = null): Resource<T> {
-            return Resource(Status.ERROR, 0, data, message)
-        }
-
-        fun <T> loading(data: T? = null): Resource<T> {
-            return Resource(Status.LOADING, 0, data, null)
-        }
+        fun <T> loading(): Resource<T> = Resource(Status.LOADING, null, null)
+        fun <T> success(data: T? = null): Resource<T> = Resource(Status.SUCCESS, data, null)
+        fun <T> error(data: T?, error: Throwable): Resource<T> = Resource(Status.ERROR, data, error)
+        fun <T> error(data: T?): Resource<T> = Resource(Status.ERROR, data, null)
     }
 }

@@ -14,6 +14,7 @@ import com.mura.android.lyrics.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +25,7 @@ class MainViewModel @Inject constructor(
     private val gson: Gson
 ) : ViewModel() {
 
-    var response = MutableLiveData<Resource<Any>>()
+    var lyric = MutableLiveData<Resource<Lyric>>()
 
     var error = MutableLiveData<Resource<Any>>()
 
@@ -32,56 +33,41 @@ class MainViewModel @Inject constructor(
 
     val responseDatabase =
         liveData(Dispatchers.IO) {
-        emit(Resource.loading(null))
-        emit(Resource.success(dataBaseRepository.getAllLyrics()))
-    }
+            emit(Resource.loading())
+            emit(Resource.success(dataBaseRepository.getAllLyrics()))
+        }
 
     suspend fun onSearchByArtistAndTitle(artist: String, title: String) =
 
         viewModelScope.launch {
-            response.value = Resource.loading(null)
-
+            Resource.loading<Boolean>()
             if (networkHelper.isNetworkConnected()) {
-                try {
-                    response.value = Resource.success(
-                        lyricRepository.findLyricByArtistAndTitle(
-                            artist,
-                            title
+
+                val response = lyricRepository.findLyricByArtistAndTitle(
+                    artist,
+                    title
+                )
+
+                if (response.code() == 200) {
+
+                    val lyricResponse: String = gson.fromJson(
+                        response.body()!!.asJsonObject,
+                        Lyric::class.java
+                    ).lyric
+
+                    dataBaseRepository.insetLyric(
+                        Lyric(
+                            artist = artist,
+                            title = title,
+                            lyric = lyricResponse
                         )
                     )
 
-                    if (response.value!!.code == 200) {
-
-                        val lyricResponse: String = gson.fromJson(
-                            response.value!!.data.toString(),
-                            Lyric::class.java
-                        ).lyric
-
-                        dataBaseRepository.insetLyric(
-                            Lyric(
-                                artist = artist,
-                                title = title,
-                                lyric = lyricResponse
-                            )
-                        )
-
-                    } else {
-                        error.value =
-                            Resource.error(
-                                data = null,
-                                message = "No se encontro algun resultado"
-                            )
-
-                    }
-
-                } catch (e: Exception) {
+                } else {
                     error.value =
-                        Resource.error(
-                            data = null,
-                            message = e.message ?: otherErr
-                        )
-
+                        Resource.error(otherErr)
                 }
+
             } else {
                 eventMsg.value = internetErr
             }

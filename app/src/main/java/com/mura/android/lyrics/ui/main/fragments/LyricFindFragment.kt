@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.ui.fragments
+package com.mura.android.lyrics.ui.main.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
