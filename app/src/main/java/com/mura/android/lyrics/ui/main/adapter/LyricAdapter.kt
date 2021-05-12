@@ -6,8 +6,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.mura.android.lyrics.data.model.Lyric
 import com.mura.android.lyrics.databinding.ItemLyricBinding
-import com.mura.android.lyrics.ui.fragments.LyricListFragment
-import com.mura.android.lyrics.ui.fragments.LyricListFragmentDirections
+import com.mura.android.lyrics.ui.main.fragments.LyricListFragment
+import com.mura.android.lyrics.ui.main.fragments.LyricListFragmentDirections
 
 
 class LyricAdapter(private val lyricListFragment: LyricListFragment) :

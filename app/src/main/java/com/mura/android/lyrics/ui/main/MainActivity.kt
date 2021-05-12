@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.ui
+package com.mura.android.lyrics.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
