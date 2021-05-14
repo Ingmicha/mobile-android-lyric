@@ -22,7 +22,7 @@ class LyricFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_lyric, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lyric, container, false)
         binding.lifecycleOwner = this
         binding.lyricViewModel = mainViewModel
         return binding.root
@@ -45,7 +45,11 @@ class LyricFragment : BaseFragment() {
                     mainViewModel.onSearchByArtistAndTitle(artist, title)
                 }
             } else {
-                Snackbar.make(requireView(), "Debes ingresar un artista y un titulo", Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    requireView(),
+                    "Debes ingresar un artista y un titulo",
+                    Snackbar.LENGTH_SHORT
+                )
                     .show()
             }
 

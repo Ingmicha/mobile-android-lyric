@@ -1,5 +1,6 @@
 package com.mura.android.lyrics.di
 
+import com.google.android.gms.location.LocationRequest
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mura.android.lyrics.data.remote.ApiServiceDataSource
@@ -64,5 +65,13 @@ object AppModule {
     @Provides
     fun provideApiServiceHelper(apiHelper: ApiServiceDataSource):
             ApiServiceDataSourceImp = apiHelper
+
+    @Provides
+    @Singleton
+    fun locationRequest(): LocationRequest = LocationRequest.create().apply {
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        interval = 3 * 1000
+        fastestInterval = 5 * 1000
+    }
 
 }

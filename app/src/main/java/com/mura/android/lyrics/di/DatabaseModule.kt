@@ -1,9 +1,9 @@
 package com.mura.android.lyrics.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.mura.android.lyrics.data.db.AppDatabase
+import com.mura.android.lyrics.data.db.LocationDao
 import com.mura.android.lyrics.data.db.LyricDao
 import dagger.Module
 import dagger.Provides
@@ -27,8 +27,13 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideChannelDao(appDatabase: AppDatabase): LyricDao {
+    fun provideLyricDao(appDatabase: AppDatabase): LyricDao {
         return appDatabase.lyricDao()
+    }
+
+    @Provides
+    fun provideLocationDao(appDatabase: AppDatabase): LocationDao {
+        return appDatabase.locationDao()
     }
 
 }
