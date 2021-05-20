@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.mura.android.lyrics.data.model.Lyric" />
+            type="com.mura.android.lyrics.lyric.domain.model.Lyric" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

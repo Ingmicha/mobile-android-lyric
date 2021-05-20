@@ -1,10 +1,10 @@
-package com.mura.android.lyrics.di
+package com.mura.android.lyrics.utils.di
 
 import android.content.Context
 import androidx.room.Room
-import com.mura.android.lyrics.data.db.AppDatabase
-import com.mura.android.lyrics.data.db.LocationDao
-import com.mura.android.lyrics.data.db.LyricDao
+import com.mura.android.lyrics.utils.database.AppDatabase
+import com.mura.android.lyrics.location.data.database.LocationDao
+import com.mura.android.lyrics.lyric.data.database.LyricDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,57 +1,38 @@
 package com.mura.android.lyrics.ui.viewModel
 
 import android.app.Application
-import android.content.Context
 import android.location.Location
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.work.*
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.gson.Gson
-import com.mura.android.lyrics.data.model.Lyric
-import com.mura.android.lyrics.data.repository.DataBaseRepository
-import com.mura.android.lyrics.data.repository.LyricRepository
+import com.mura.android.lyrics.lyric.domain.model.Lyric
 import com.mura.android.lyrics.data.repository.Repository
 import com.mura.android.lyrics.utils.NetworkHelper
 import com.mura.android.lyrics.utils.Resource
 import com.mura.android.lyrics.utils.SingleLiveEvent
 import com.mura.android.lyrics.utils.workermanager.TrackLocationWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val networkHelper: NetworkHelper,
-    private val gson: Gson,
-    private val appContext: Application,
-    private val locationRequest: LocationRequest,
-    private val repository: Repository
-) : ViewModel() {
+open class MainViewModel : ViewModel() {
 
-    var lyric = MutableLiveData<Resource<Lyric>>()
+    @Inject
+    lateinit var application: Application
 
-    var error = MutableLiveData<Resource<Any>>()
+    @Inject
+    lateinit var locationRequest: LocationRequest
 
-    val eventMsg = SingleLiveEvent<String>()
 
-    val enableLocation: MutableLiveData<Resource<Boolean>> = MutableLiveData()
-
-    val location: MutableLiveData<Resource<List<Location>>> = MutableLiveData()
-
-    val responseDatabase =
-        liveData(Dispatchers.IO) {
-            emit(Resource.loading())
-            emit(Resource.success(repository.dataBaseRepository.getAllLyrics()))
-        }
+    val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
     suspend fun onSearchByArtistAndTitle(artist: String, title: String) =
 
@@ -90,18 +71,19 @@ class MainViewModel @Inject constructor(
         }
 
     fun locationSetup() {
-        enableLocation.value = Resource.loading()
-        LocationServices.getSettingsClient(appContext)
+        LocationServices.getSettingsClient(application)
             .checkLocationSettings(
                 LocationSettingsRequest.Builder()
                     .addLocationRequest(locationRequest)
                     .setAlwaysShow(true)
                     .build()
             )
-            .addOnSuccessListener { enableLocation.value = Resource.success(true) }
+            .addOnSuccessListener {
+                //enableLocation.value = Resource.success(true)
+            }
             .addOnFailureListener {
                 //Timber.e(it, "Gps not enabled")
-                enableLocation.value = Resource.error(false)
+                //enableLocation.value = Resource.error(false)
             }
     }
 
@@ -116,7 +98,7 @@ class MainViewModel @Inject constructor(
             ).setConstraints(constraints).build()
 
 
-        WorkManager.getInstance(appContext).enqueueUniquePeriodicWork(
+        WorkManager.getInstance(application).enqueueUniquePeriodicWork(
             LOCATION_WORK_TAG,
             ExistingPeriodicWorkPolicy.KEEP,
             locationWorker
@@ -124,11 +106,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun stopTrackLocation() {
-        WorkManager.getInstance(appContext).cancelAllWorkByTag(LOCATION_WORK_TAG)
-    }
-
-    fun getSavedLocation() {
-
+        WorkManager.getInstance(application).cancelAllWorkByTag(LOCATION_WORK_TAG)
     }
 
     companion object {

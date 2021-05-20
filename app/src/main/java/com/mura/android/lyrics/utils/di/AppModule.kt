@@ -1,11 +1,10 @@
-package com.mura.android.lyrics.di
+package com.mura.android.lyrics.utils.di
 
 import com.google.android.gms.location.LocationRequest
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.mura.android.lyrics.data.remote.ApiServiceDataSource
-import com.mura.android.lyrics.data.remote.ApiServiceDataSourceImp
-import com.mura.android.lyrics.data.remote.ApiServices
+import com.mura.android.lyrics.lyric.data.api.LyricApiDataSource
+import com.mura.android.lyrics.lyric.data.api.LyricApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,11 +59,11 @@ object AppModule {
 
     @Provides
     fun provideApiServices(retrofit: Retrofit) =
-        retrofit.create(ApiServices::class.java)
+        retrofit.create(LyricApi::class.java)
 
     @Provides
-    fun provideApiServiceHelper(apiHelper: ApiServiceDataSource):
-            ApiServiceDataSourceImp = apiHelper
+    fun provideApiServiceHelper(apiHelper: LyricApiDataSource):
+            LyricApiDataSource = apiHelper
 
     @Provides
     @Singleton

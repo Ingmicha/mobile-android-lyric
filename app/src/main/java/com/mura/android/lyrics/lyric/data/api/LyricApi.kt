@@ -1,12 +1,11 @@
-package com.mura.android.lyrics.data.remote
+package com.mura.android.lyrics.lyric.data.api
 
 import com.google.gson.JsonObject
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ApiServices {
+interface LyricApi {
 
     @GET("{artist}/{title}")
     suspend fun getLyricByArtistAndTitle(

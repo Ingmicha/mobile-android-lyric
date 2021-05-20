@@ -3,11 +3,9 @@ package com.mura.android.lyrics.utils.workermanager
 import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
-import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.mura.android.lyrics.data.repository.LocationRepository
 import com.mura.android.lyrics.data.repository.Repository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

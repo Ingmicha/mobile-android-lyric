@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.app
+package com.mura.android.lyrics.utils.app
 
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory

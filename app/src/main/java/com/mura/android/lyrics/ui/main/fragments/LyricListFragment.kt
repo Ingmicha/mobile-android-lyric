@@ -43,8 +43,6 @@ class LyricListFragment : BaseFragment(), ActivityCompat.OnRequestPermissionsRes
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.stopTrackLocation()
-
         //** Set the adapter of the RecyclerView
         setAdapter()
 
@@ -94,7 +92,7 @@ class LyricListFragment : BaseFragment(), ActivityCompat.OnRequestPermissionsRes
 
 //        mainViewModel.responseDatabase.observe(viewLifecycleOwner, Observer {
 //            //(activity as MainActivity).showLinearProgressBar(false) //  View.GONE
-//            if (it.status == Resource.Status.SUCCESS)
+//            if (it.status == Resource.com.mura.android.lyrics.utils.app.test.Status.SUCCESS)
 //                if ((it.data as List<*>).isNotEmpty()) {
 //                    adapter.updateData(it.data)
 //                    binding.recyclerViewLyricList.visibility = View.VISIBLE

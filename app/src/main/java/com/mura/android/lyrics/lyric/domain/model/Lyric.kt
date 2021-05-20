@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.data.model
+package com.mura.android.lyrics.lyric.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -28,4 +28,8 @@ data class Lyric(
     @ColumnInfo(name = "lyrics")
     @SerializedName("lyrics")
     val lyric: String
-)
+) {
+    override fun toString(): String {
+        return lyric
+    }
+}

@@ -1,9 +1,10 @@
-package com.mura.android.lyrics.data.repository
+package com.mura.android.lyrics.location.data.repository
 
 import android.app.Application
 import android.util.Log
 import com.google.android.gms.location.LocationServices
 import com.mura.android.lyrics.data.model.Location
+import com.mura.android.lyrics.location.data.database.LocationDao
 import com.mura.android.lyrics.utils.extentions.checkLocationPermission
 import com.mura.android.lyrics.utils.extentions.isGPSEnabled
 import kotlinx.coroutines.GlobalScope
@@ -11,8 +12,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LocationRepository @Inject constructor(
-    private val application: Application,
-    private val database: DataBaseRepository
+    private val dao: LocationDao,
+    private val application: Application
 ) {
 
     fun getLocation() {
@@ -36,11 +37,11 @@ class LocationRepository @Inject constructor(
                     }
                 }
         } else {
-            Log.d("WORK-MANAGER","ERROR")
+            Log.d("WORK-MANAGER", "ERROR")
         }
     }
 
     private fun saveLocation(location: Location) =
-        GlobalScope.launch { database.saveLocation(location) }
+        GlobalScope.launch { dao.insert(location) }
 
 }

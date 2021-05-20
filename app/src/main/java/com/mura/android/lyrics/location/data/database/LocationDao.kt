@@ -1,4 +1,4 @@
-package com.mura.android.lyrics.data.db
+package com.mura.android.lyrics.location.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

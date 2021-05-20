@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.mura.android.lyrics.data.model.Lyric
+import com.mura.android.lyrics.lyric.domain.model.Lyric
 import com.mura.android.lyrics.databinding.ItemLyricBinding
 import com.mura.android.lyrics.ui.main.fragments.LyricListFragment
 import com.mura.android.lyrics.ui.main.fragments.LyricListFragmentDirections

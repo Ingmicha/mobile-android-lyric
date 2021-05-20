@@ -7,7 +7,7 @@
 
         <variable
             name="lyricViewModel"
-            type="com.mura.android.lyrics.ui.viewModel.MainViewModel" />
+            type="com.mura.android.lyrics.lyric.ui.lyric.LyricViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
-                android:text="@{lyricViewModel.lyric != null? String.valueOf(lyricViewModel.lyric) : @string/text_no_result}" />
+                android:text="@{lyricViewModel.lyric != null? String.valueOf(lyricViewModel.lyric.lyric) : @string/text_no_result}" />
         </ScrollView>
 
 
